@@ -52,6 +52,12 @@ def brain_my(x, y):
         board[x][y] = 1
     else:
         pp.pipeOut("ERROR my move [{},{}]".format(x, y))
+        
+def brain_end():
+    pass
+
+def brain_about():
+    pp.pipeOut(pp.infotext)
 
 if DEBUG_EVAL:
     import win32gui
@@ -67,6 +73,8 @@ if DEBUG_EVAL:
 pp.brain_init = brain_init
 pp.brain_turn = brain_turn
 pp.brain_my = brain_my
+pp.brain_end = brain_end
+pp.brain_about = brain_about
 if DEBUG_EVAL:
     pp.brain_eval = brain_eval
 
