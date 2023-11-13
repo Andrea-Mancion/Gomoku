@@ -30,23 +30,50 @@ def brain_init():
         return
     pp.pipeOut("OK - everything is good")
     
+def easy_mode(i):
+    while True:
+        x = random.randint(0, pp.width)
+        y = random.randint(0, pp.height)
+        i += 1
+        if pp.terminateAI:
+            return
+        if isFree(x, y):
+            break
+    if i > 1:
+        pp.pipeOut("DEBUG {} coordinates didn't hit an empty field".format(i))
+    pp.do_mymove(x, y)
+    
+def medium_mode(i):
+    num_simulations = 100
+    best_move = None
+    best_score = -1
+    
+    for _ in range(num_simulations):
+        x = random.randint(0, pp.width)
+        y = random.randint(0, pp.height)
+        if pp.terminateAI:
+            return
+        if isFree(x, y):
+            score = simulate(x, y)
+            if score > best_score:
+                best_move = (x, y)
+                best_score = score
+    if best_move is None:
+        easy_mode(i)
+    else:
+        x, y = best_move
+        pp.do_mymove(x, y)
+
+    
 def brain_turn():
     if pp.terminateAI:
         return
     i = 0
     if EASY:
-        while True:
-            x = random.randint(0, pp.width)
-            y = random.randint(0, pp.height)
-            i += 1
-            if pp.terminateAI:
-                return
-            if isFree(x, y):
-                break
-        if i > 1:
-            pp.pipeOut("DEBUG {} coordinates didn't hit an empty field".format(i))
-        pp.do_mymove(x, y)
-
+        easy_mode(i)
+    elif MEDIUM:
+        medium_mode(i)
+        
 def brain_my(x, y):
     if isFree(x,y):
         board[x][y] = 1
