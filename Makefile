@@ -6,6 +6,7 @@
 ##
 
 SRC = ./src/pisqpipe.py \
+	./src/annexe_function.py \
 	./src/main.py
 
 NAME = pbrain-gomoku-ai

@@ -8,6 +8,8 @@
 import random
 import pisqpipe as pp
 from pisqpipe import DEBUG_EVAL, DEBUG
+import copy
+from annexe_function import play_random_game, backpropagate, select_best_move
 
 pp.infotext = 'name="AI", author="Andrea Mancion", version="1.0", country="France", www="https://github.com/stranskyjan/pbrain-pyrandom"'
 
@@ -29,6 +31,19 @@ def brain_init():
         pp.pipeOut("ERROR message - unsupported size or other error")
         return
     pp.pipeOut("OK - everything is good")
+    
+def simulate(x, y):
+    simulate_board = copy.deepcopy(board)
+    
+    num_simulations = 100
+    
+    for _ in range(num_simulations):
+        temp_board = copy.deepcopy(simulate_board)
+        result = play_random_game(temp_board)
+        backpropagate(simulate_board, x, y, result)
+    best_move = select_best_move(simulate_board, x, y)
+    
+    return best_move
     
 def easy_mode(i):
     while True:
