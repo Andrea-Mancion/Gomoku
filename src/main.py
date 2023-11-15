@@ -95,6 +95,24 @@ def brain_my(x, y):
         board[x][y] = 1
     else:
         pp.pipeOut("ERROR my move [{},{}]".format(x, y))
+        
+def brain_end():
+    pass
+
+def brain_about():
+    pp.pipeOut(pp.infotext)
+    
+def brain_opponents(x, y):
+    if isFree(x, y):
+        board[x][y] = 2
+    else:
+        pp.pipeOut("ERROR opponents's move [{},{}]".format(x, y))
+        
+def brain_block(x, y):
+    if isFree(x, y):
+        board[x][y] = 3
+    else:
+        pp.pipeOut("ERROR winning move [{},{}]".format(x, y))
 
 if DEBUG_EVAL and platform.system() == "Windows":
     import win32gui
@@ -110,6 +128,10 @@ if DEBUG_EVAL and platform.system() == "Windows":
 pp.brain_init = brain_init
 pp.brain_turn = brain_turn
 pp.brain_my = brain_my
+pp.brain_end = brain_end
+pp.brain_about = brain_about
+pp.brain_opponents = brain_opponents
+pp.brain_block = brain_block
 if DEBUG_EVAL and platform.system() == "Windows":
     pp.brain_eval = brain_eval
 
