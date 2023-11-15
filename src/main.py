@@ -6,6 +6,7 @@
 ##
 
 import random
+import platform
 import pisqpipe as pp
 from pisqpipe import DEBUG_EVAL, DEBUG
 import copy
@@ -95,7 +96,7 @@ def brain_my(x, y):
     else:
         pp.pipeOut("ERROR my move [{},{}]".format(x, y))
 
-if DEBUG_EVAL:
+if DEBUG_EVAL and platform.system() == "Windows":
     import win32gui
     def brain_eval(x, y):
         wnd = win32gui.GetForegroundWindow()
@@ -109,7 +110,7 @@ if DEBUG_EVAL:
 pp.brain_init = brain_init
 pp.brain_turn = brain_turn
 pp.brain_my = brain_my
-if DEBUG_EVAL:
+if DEBUG_EVAL and platform.system() == "Windows":
     pp.brain_eval = brain_eval
 
 def main():
