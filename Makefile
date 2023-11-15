@@ -5,8 +5,7 @@
 ## Makefile
 ##
 
-SRC = ./src/pisqpipe.py \
-	./src/main.py
+SRC = ./src/main.py
 
 NAME = pbrain-gomoku-ai
 

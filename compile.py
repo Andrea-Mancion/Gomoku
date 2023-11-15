@@ -1,6 +1,8 @@
 from os import system
 
 files =  [
+    "src/pisqpipe.py",
+    "src/annexe_function.py",
     "src/main.py",
 ]
 
