@@ -10,7 +10,8 @@ import platform
 import pisqpipe as pp
 from pisqpipe import DEBUG_EVAL, DEBUG
 import copy
-from annexe_function import play_random_game, backpropagate, select_best_move
+from annexe_function import play_random_game, backpropagate, select_best_move, is_game_over
+import sys
 
 pp.infotext = 'name="AI", author="Andrea Mancion", version="1.0", country="France", www="https://github.com/stranskyjan/pbrain-pyrandom"'
 
@@ -89,6 +90,9 @@ def brain_turn():
         easy_mode(i)
     elif MEDIUM:
         medium_mode(i)
+    if is_game_over(board):
+        pp.pipeOut("INFO game over")
+        sys.exit(0)
         
 def brain_my(x, y):
     if isFree(x,y):
