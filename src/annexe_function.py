@@ -75,6 +75,8 @@ def backpropagate(board, x, y, result):
     
     while node['parent'] is not None:
         node = node['parent']
+        if not isinstance(node, dict):
+            node = {'total_score': 0, 'visit_count': 0, 'parent': None}
         node['total_score'] += result
         node['visit_count'] += 1
 
@@ -83,16 +85,20 @@ def select_best_move(board, x, y):
     best_move = None
     best_score = float('-inf')
     
-    for move in moves:
-        node = board[move[0]][move[1]]
-        if not isinstance(node, dict):
-            node = {'total_score': 0, 'visit_count': 0, 'parent': None}
-            board[move[0]][move[1]] = node
-        if node['visit_count'] == 0:
-            print("VAIS-je ici ?")
-            continue
-        score = node['total_score'] / node['visit_count']  + 1.41 * (2 * math.log(x * y) / node['visite_count']) ** 0.5
-        if score > best_score:
-            best_move = move
-            best_score = score 
+    for i in range(pp.width):
+        for j in range(pp.height):
+            node = board[i][j]
+            if not isinstance(node, dict):
+                node = {'total_score': 0, 'visit_count': 0, 'parent': None}
+                board[i][j] = node
+            if node['visit_count'] == 0:
+                continue
+            print(f"X: #{x} Y: #{y}")
+            if x * y == 0:
+                score = node['total_score'] / node['visit_count'] + 1.41 * (2 * 0 / node['visit_count']) ** 0.5
+            else:
+                score = node['total_score'] / node['visit_count']  + 1.41 * (2 * math.log(x * y) / node['visit_count']) ** 0.5
+            if score > best_score:
+                best_move = (i, j)
+                best_score = score 
     return best_score

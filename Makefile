@@ -5,14 +5,15 @@
 ## Makefile
 ##
 
-SRC = ./src/main.py
+SRC = ./src/ia.py
+MODULES = ./src/pisqpipe.py ./src/annexe_function.py
 
 NAME = pbrain-gomoku-ai
 
 all: $(NAME)
 
-$(NAME): $(SRC)
-	cp $(SRC) $(NAME)
+$(NAME): $(SRC) $(MODULES)
+	cp $(SRC) $(MODULES) $(NAME)
 	echo "#!/usr/bin/env python3" | cat - $(NAME) > temp && mv temp $(NAME)
 	chmod a+x $(NAME)
 

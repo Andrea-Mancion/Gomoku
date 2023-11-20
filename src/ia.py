@@ -12,6 +12,7 @@ from pisqpipe import DEBUG_EVAL, DEBUG
 import copy
 from annexe_function import play_random_game, backpropagate, select_best_move, is_game_over, evaluate
 import sys
+sys.path.insert(1, "./src")
 
 pp.infotext = 'name="AI", author="Andrea Mancion", version="1.0", country="France", www="https://github.com/stranskyjan/pbrain-pyrandom"'
 
@@ -43,6 +44,11 @@ def simulate(x, y):
         temp_board = copy.deepcopy(simulate_board)
         result = play_random_game(temp_board)
         backpropagate(simulate_board, x, y, result)
+    node = simulate_board[x][y]
+    print("Node before update:", node)
+    if not isinstance(node, dict):
+        node = {'total_score': 0, 'visit_count': 0, 'parent': None}
+        simulate_board[x][y] = node
     best_score = select_best_move(simulate_board, x, y)
     
     return best_score
