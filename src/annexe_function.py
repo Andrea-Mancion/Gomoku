@@ -29,7 +29,7 @@ def get_legal_moves(board):
 
 def make_move(board, x, y):
     if board[x][y] == 0:
-        board[x][y] == 1
+        board[x][y] = 1
     else:
         pp.pipeOut("Error: illegal move")
         
@@ -66,6 +66,10 @@ def play_random_game(board):
 def backpropagate(board, x, y, result):
     node = board[x][y]
     
+    if not isinstance(node, dict):
+        node = {'total_score': 0, 'visit_count': 0, 'parent': None}
+        board[x][y] = node
+    
     node['total_score'] += result
     node['visit_count'] += 1
     
@@ -81,11 +85,14 @@ def select_best_move(board, x, y):
     
     for move in moves:
         node = board[move[0]][move[1]]
+        if not isinstance(node, dict):
+            node = {'total_score': 0, 'visit_count': 0, 'parent': None}
+            board[move[0]][move[1]] = node
         if node['visit_count'] == 0:
+            print("VAIS-je ici ?")
             continue
-        score = node['total_score'] / node['visit_count'] + 1.41 * (2 * math.log(x * y) / node['visit_count']) ** 0.5
+        score = node['total_score'] / node['visit_count']  + 1.41 * (2 * math.log(x * y) / node['visite_count']) ** 0.5
         if score > best_score:
             best_move = move
-            best_score = score
-            
-    return best_move
+            best_score = score 
+    return best_score

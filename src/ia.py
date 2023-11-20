@@ -18,8 +18,8 @@ pp.infotext = 'name="AI", author="Andrea Mancion", version="1.0", country="Franc
 MAX_BOARD = 50
 board = [[0 for i in range(MAX_BOARD)] for j in range(MAX_BOARD)]
 
-EASY = True
-MEDIUM = False
+EASY = False
+MEDIUM = True
 HARD = False
 
 def isFree(x, y):
@@ -37,15 +37,15 @@ def brain_init():
 def simulate(x, y):
     simulate_board = copy.deepcopy(board)
     
-    num_simulations = 100
+    num_simulations = 4
     
     for _ in range(num_simulations):
         temp_board = copy.deepcopy(simulate_board)
         result = play_random_game(temp_board)
         backpropagate(simulate_board, x, y, result)
-    best_move = select_best_move(simulate_board, x, y)
+    best_score = select_best_move(simulate_board, x, y)
     
-    return best_move
+    return best_score
     
 def easy_mode(i):
     while True:
@@ -61,7 +61,7 @@ def easy_mode(i):
     pp.do_mymove(x, y)
     
 def medium_mode(i):
-    num_simulations = 100
+    num_simulations = 4
     best_move = None
     best_score = -1
     
@@ -72,9 +72,12 @@ def medium_mode(i):
             return
         if isFree(x, y):
             score = simulate(x, y)
+            print("SCORE: " + str(score))
             if score > best_score:
+                print("je vcais la?")
                 best_move = (x, y)
                 best_score = score
+    print("OKK? " + str(best_move))
     if best_move is None:
         easy_mode(i)
     else:
