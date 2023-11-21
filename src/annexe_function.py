@@ -93,7 +93,6 @@ def select_best_move(board, x, y):
                 board[i][j] = node
             if node['visit_count'] == 0:
                 continue
-            print(f"X: #{x} Y: #{y}")
             if x * y == 0:
                 score = node['total_score'] / node['visit_count'] + 1.41 * (2 * 0 / node['visit_count']) ** 0.5
             else:

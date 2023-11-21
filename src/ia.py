@@ -22,6 +22,7 @@ board = [[0 for i in range(MAX_BOARD)] for j in range(MAX_BOARD)]
 EASY = False
 MEDIUM = True
 HARD = False
+ai_made_move = False
 
 def isFree(x, y):
     return x >= 0 and y >= 0 and x < pp.width and y < pp.height and board[x][y] == 0
@@ -45,7 +46,6 @@ def simulate(x, y):
         result = play_random_game(temp_board)
         backpropagate(simulate_board, x, y, result)
     node = simulate_board[x][y]
-    print("Node before update:", node)
     if not isinstance(node, dict):
         node = {'total_score': 0, 'visit_count': 0, 'parent': None}
         simulate_board[x][y] = node
@@ -78,12 +78,9 @@ def medium_mode(i):
             return
         if isFree(x, y):
             score = simulate(x, y)
-            print("SCORE: " + str(score))
             if score > best_score:
-                print("je vcais la?")
                 best_move = (x, y)
                 best_score = score
-    print("OKK? " + str(best_move))
     if best_move is None:
         easy_mode(i)
     else:
@@ -92,13 +89,19 @@ def medium_mode(i):
 
     
 def brain_turn():
+    global ai_made_move
     if pp.terminateAI:
         return
-    i = 0
-    if EASY:
-        easy_mode(i)
-    elif MEDIUM:
-        medium_mode(i)
+    if ai_made_move == False:
+        i = 0
+        if EASY:
+            easy_mode(i)
+        elif MEDIUM:
+            medium_mode(i)
+    ai_made_move = False
+    print("REEAL BOARD: ")
+    for row in board:
+        pp.pipeOut(" ".join(map(str, row)))
     if is_game_over(board):
         pp.pipeOut("INFO game over")
         winner = evaluate(board)
@@ -120,9 +123,24 @@ def brain_end():
 def brain_about():
     pp.pipeOut(pp.infotext)
     
+def block_opponent_moves():
+    global ai_made_move
+    for i in range(pp.width):
+        for j in range(pp.height):
+            if isFree(i, j):
+                board[i][j] = 2
+                if evaluate(board) == -1:
+                    print(f"JE VAIS LA JE BLOQUE {i} {j}")
+                    board[i][j] = 0
+                    ai_made_move = True
+                    pp.do_mymove(i, j)
+                    return
+                board[i][j] = 0
+    
 def brain_opponents(x, y):
     if isFree(x, y):
         board[x][y] = 2
+        block_opponent_moves()
     else:
         pp.pipeOut("ERROR opponents's move [{},{}]".format(x, y))
         
