@@ -5,14 +5,14 @@
 ## main
 ##
 
+import sys
+sys.path.append("./src")
 import random
 import platform
 import pisqpipe as pp
 from pisqpipe import DEBUG_EVAL, DEBUG
 import copy
 from annexe_function import play_random_game, backpropagate, select_best_move, is_game_over, evaluate
-import sys
-sys.path.insert(1, "./src")
 
 pp.infotext = 'name="AI", author="Andrea Mancion", version="1.0", country="France", www="https://github.com/stranskyjan/pbrain-pyrandom"'
 
@@ -131,6 +131,9 @@ def block_opponent_moves():
                 board[i][j] = 2
                 if evaluate(board) == -1:
                     print(f"JE VAIS LA JE BLOQUE {i} {j}")
+                    print("BLOCK BOARD: ")
+                    for row in board:
+                        pp.pipeOut(" ".join(map(str, row)))
                     board[i][j] = 0
                     ai_made_move = True
                     pp.do_mymove(i, j)
