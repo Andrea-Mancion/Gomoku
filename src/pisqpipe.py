@@ -346,5 +346,8 @@ def main():
 	# win32process.beginthreadex(None, 0, threadLoop, (), 0)
 	# event2 = win32event.CreateEvent(None, 1, 1, None)
 	while True:
-		cmd = get_line()
+		try:
+			cmd = input()
+		except EOFError:
+			break
 		do_command(cmd)
