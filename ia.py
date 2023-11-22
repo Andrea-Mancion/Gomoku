@@ -27,6 +27,14 @@ ai_made_move = False
 def isFree(x, y):
     return x >= 0 and y >= 0 and x < pp.width and y < pp.height and board[x][y] == 0
 
+def isFreeSize():
+    count = 0
+    for i in range(pp.width):
+        for j in range(pp.height):
+            if isFree(i, j):
+                count += 1
+    return count
+
 def brain_init():
     if pp.width < 5 or pp.height < 5:
         pp.pipeOut("ERROR size of the board")
@@ -109,6 +117,10 @@ def brain_turn():
             pp.pipeOut("Winner is opponent")
         elif winner == 1:
             pp.pipeOut("Winner is AI")
+        sys.exit(0)
+    if isFreeSize() == 0:
+        pp.pipeOut("INFO game over")
+        pp.pipeOut("Draw")
         sys.exit(0)
         
 def brain_my(x, y):
