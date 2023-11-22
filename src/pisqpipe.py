@@ -313,6 +313,7 @@ def do_command(cmd):
 					pipeOut("ERROR x,y,who or DONE expected after BOARD")
 				break
 		turn()
+		brain_turn()
 		return
 	#
 	param = get_cmd_param("takeback", cmd)
