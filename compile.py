@@ -3,7 +3,7 @@ from os import system
 files =  [
     "src/pisqpipe.py",
     "src/annexe_function.py",
-    "src/ia.py"
+    "ia.py"
 ]
 
 files_list = ""

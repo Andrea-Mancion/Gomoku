@@ -4,13 +4,6 @@
 import sys
 import platform as plateform
 
-if plateform.system() == 'Windows':
-	import win32api
-	import win32event
-	import win32console
-	import win32process
-	import pywintypes
-
 DEBUG      = False
 ABOUT_FUNC = True
 DEBUG_EVAL = True
@@ -139,26 +132,20 @@ def get_cmd_param(command, input):
 def threadLoop():
 	"""main function for the working thread"""
 	while True:
-		win32event.WaitForSingleObject(event1, win32event.INFINITE)
 		brain_turn()
-		win32event.SetEvent(event2)
 
 def turn():
 	"""start thinking"""
 	global terminateAI
 	terminateAI = 0
-	# win32event.ResetEvent(event2)
-	# win32event.SetEvent(event1)
 
 def stop():
 	"""stop thinking"""
 	global terminateAI
 	terminateAI = 1
-	# win32event.WaitForSingleObject(event2, win32event.INFINITE)
 
 def start():
 	global start_time
-	# start_time = win32api.GetTickCount()
 	stop()
 	global width, height
 	if not width:
@@ -334,18 +321,7 @@ def do_command(cmd):
 
 def main():
 	"""main function for AI console application"""
-	#
-	# handle = win32console.GetStdHandle(win32console.STD_INPUT_HANDLE)
-	# try:
-	# 	if handle.GetConsoleMode():
-	# 		pipeOut("MESSAGE Gomoku AI should not be started directly. Please install gomoku manager (http://sourceforge.net/projects/piskvork). Then enter path to this exe file in players settings.")
-	# except pywintypes.error:
-	# 	pass
-	#
-	# global event1, event2
-	# event1 = win32event.CreateEvent(None, 0, 0, None)
-	# win32process.beginthreadex(None, 0, threadLoop, (), 0)
-	# event2 = win32event.CreateEvent(None, 1, 1, None)
+	
 	while True:
 		try:
 			cmd = input()
