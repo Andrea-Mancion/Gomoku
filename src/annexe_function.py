@@ -4,6 +4,9 @@ from pisqpipe import DEBUG_EVAL, DEBUG
 import copy
 import math
 
+def isFree(x, y, board):
+    return x >= 0 and y >= 0 and x < pp.width and y < pp.height and board[x][y] == 0
+
 def is_game_over(board):
     for i in range(pp.width):
         for j in range(pp.height):
@@ -32,6 +35,23 @@ def make_move(board, x, y):
         board[x][y] = 1
     else:
         pp.pipeOut("Error: illegal move")
+
+def For_block_opp(board, player):
+    for i in range(pp.width):
+        for j in range(pp.height):
+            if isFree(i, j, board) and (
+                j + 4 < pp.height and all(board[i][j + k] == player for k in range(1, 5)) or
+                j - 4 >= 0 and all(board[i][j - k] == player for k in range(1, 5)) or
+                i + 4 < pp.width and all(board[i + k][j] == player for k in range(1, 5)) or
+                i - 4 >= 0 and all(board[i - k][j] == player for k in range(1, 5)) or
+                i + 4 < pp.width and j + 4 < pp.height and all(board[i + k][j + k] == player for k in range(1, 5)) or
+                i - 4 >= 0 and j - 4 >= 0 and all(board[i - k][j - k] == player for k in range(1, 5)) or
+                i - 4 >= 0 and j + 4 < pp.height and all(board[i - k][j + k] == player for k in range(1, 5)) or
+                i + 4 < pp.width and j - 4 >= 0 and all(board[i + k][j - k] == player for k in range(1, 5))
+            ):
+                print(f"Victoire détectée pour le joueur {player} à la position {i}, {j}")
+                return True, i, j
+    return False, 0, 0
         
 def has_won(board, player):
     for i in range(pp.width):

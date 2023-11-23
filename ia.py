@@ -12,26 +12,24 @@ import platform
 import pisqpipe as pp
 from pisqpipe import DEBUG_EVAL, DEBUG
 import copy
-from annexe_function import play_random_game, backpropagate, select_best_move, is_game_over, evaluate
+from annexe_function import play_random_game, backpropagate, select_best_move, is_game_over, evaluate, For_block_opp, isFree
 
 pp.infotext = 'name="AI", author="Andrea Mancion", version="1.0", country="France", www="https://github.com/stranskyjan/pbrain-pyrandom"'
 
 MAX_BOARD = 50
 board = [[0 for i in range(MAX_BOARD)] for j in range(MAX_BOARD)]
 
-EASY = False
-MEDIUM = True
+EASY = True
+MEDIUM = False
 HARD = False
 ai_made_move = False
-
-def isFree(x, y):
-    return x >= 0 and y >= 0 and x < pp.width and y < pp.height and board[x][y] == 0
+counter = 0
 
 def isFreeSize():
     count = 0
     for i in range(pp.width):
         for j in range(pp.height):
-            if isFree(i, j):
+            if isFree(i, j, board):
                 count += 1
     return count
 
@@ -68,7 +66,7 @@ def easy_mode(i):
         i += 1
         if pp.terminateAI:
             return
-        if isFree(x, y):
+        if isFree(x, y, board):
             break
     if i > 1:
         pp.pipeOut("DEBUG {} coordinates didn't hit an empty field".format(i))
@@ -84,7 +82,7 @@ def medium_mode(i):
         y = random.randint(0, pp.height)
         if pp.terminateAI:
             return
-        if isFree(x, y):
+        if isFree(x, y, board):
             score = simulate(x, y)
             if score > best_score:
                 best_move = (x, y)
@@ -108,8 +106,9 @@ def brain_turn():
             medium_mode(i)
     ai_made_move = False
     print("REEAL BOARD: ")
-    for row in board:
-        pp.pipeOut(" ".join(map(str, row)))
+    for i in range(pp.width):
+        row = [str(board[i][j]) for j in range(pp.height)]
+        pp.pipeOut(" ".join(row))
     if is_game_over(board):
         pp.pipeOut("INFO game over")
         winner = evaluate(board)
@@ -124,7 +123,7 @@ def brain_turn():
         sys.exit(0)
         
 def brain_my(x, y):
-    if isFree(x,y):
+    if isFree(x,y, board):
         board[x][y] = 1
     else:
         pp.pipeOut("ERROR my move [{},{}]".format(x, y))
@@ -137,30 +136,51 @@ def brain_about():
     
 def block_opponent_moves():
     global ai_made_move
+    global counter
     for i in range(pp.width):
         for j in range(pp.height):
-            if isFree(i, j):
+            if isFree(i, j, board):
                 board[i][j] = 2
-                if evaluate(board) == -1:
-                    print(f"JE VAIS LA JE BLOQUE {i} {j}")
-                    print("BLOCK BOARD: ")
-                    for row in board:
-                        pp.pipeOut(" ".join(map(str, row)))
-                    board[i][j] = 0
-                    ai_made_move = True
-                    pp.do_mymove(i, j)
-                    return
+                print("BOARD BLOCKKKKSKNSKNSS: ")
+                for x in range(pp.width):
+                    row = [str(board[x][y]) for y in range(pp.height)]
+                    pp.pipeOut(" ".join(row))
+                victory, z, w = For_block_opp(board, 2)
+                if victory:
+                    if counter == 0:
+                        counter += 1
+                        print(f"JE VAIS LA JE BLOQUE {i} {j}")
+                        print("BLOCK BOARD: ")
+                        for x in range(pp.width):
+                            row = [str(board[x][y]) for y in range(pp.height)]
+                            pp.pipeOut(" ".join(row))
+                        board[i][j] = 0
+                        ai_made_move = True
+                        print(f"I {i} J {j}")
+                        pp.do_mymove(i, j)
+                        return
+                    else:
+                        print(f"JE VAIS LA JE BLOQUE {z} {w}")
+                        print("BLOCK BOARD: ")
+                        for x in range(pp.width):
+                            row = [str(board[x][y]) for y in range(pp.height)]
+                            pp.pipeOut(" ".join(row))
+                        board[i][j] = 0
+                        ai_made_move = True
+                        print(f"I {z} J {w}")
+                        pp.do_mymove(z, w)
+                        return
                 board[i][j] = 0
     
 def brain_opponents(x, y):
-    if isFree(x, y):
+    if isFree(x, y, board):
         board[x][y] = 2
         block_opponent_moves()
     else:
         pp.pipeOut("ERROR opponents's move [{},{}]".format(x, y))
         
 def brain_block(x, y):
-    if isFree(x, y):
+    if isFree(x, y, board):
         board[x][y] = 3
     else:
         pp.pipeOut("ERROR winning move [{},{}]".format(x, y))
