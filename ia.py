@@ -159,7 +159,20 @@ def block_opponent_moves():
                         print(f"I {i} J {j}")
                         pp.do_mymove(i, j)
                         return
+                    if counter % 2 == 0:
+                        counter += 1
+                        print(f"JE VAIS LA JE BLOQUE {i} {j}")
+                        print("BLOCK BOARD: ")
+                        for x in range(pp.width):
+                            row = [str(board[x][y]) for y in range(pp.height)]
+                            pp.pipeOut(" ".join(row))
+                        board[i][j] = 0
+                        ai_made_move = True
+                        print(f"I {i} J {j}")
+                        pp.do_mymove(i, j)
+                        return
                     else:
+                        counter += 1
                         print(f"JE VAIS LA JE BLOQUE {z} {w}")
                         print("BLOCK BOARD: ")
                         for x in range(pp.width):
