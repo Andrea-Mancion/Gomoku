@@ -141,19 +141,11 @@ def block_opponent_moves():
         for j in range(pp.height):
             if isFree(i, j, board):
                 board[i][j] = 2
-                print("BOARD BLOCKKKKSKNSKNSS: ")
-                for x in range(pp.width):
-                    row = [str(board[x][y]) for y in range(pp.height)]
-                    pp.pipeOut(" ".join(row))
                 victory, z, w = For_block_opp(board, 2)
                 if victory:
                     if counter == 0:
                         counter += 1
                         print(f"JE VAIS LA JE BLOQUE {i} {j}")
-                        print("BLOCK BOARD: ")
-                        for x in range(pp.width):
-                            row = [str(board[x][y]) for y in range(pp.height)]
-                            pp.pipeOut(" ".join(row))
                         board[i][j] = 0
                         ai_made_move = True
                         print(f"I {i} J {j}")
@@ -162,10 +154,6 @@ def block_opponent_moves():
                     if counter % 2 == 0:
                         counter += 1
                         print(f"JE VAIS LA JE BLOQUE {i} {j}")
-                        print("BLOCK BOARD: ")
-                        for x in range(pp.width):
-                            row = [str(board[x][y]) for y in range(pp.height)]
-                            pp.pipeOut(" ".join(row))
                         board[i][j] = 0
                         ai_made_move = True
                         print(f"I {i} J {j}")
@@ -175,9 +163,6 @@ def block_opponent_moves():
                         counter += 1
                         print(f"JE VAIS LA JE BLOQUE {z} {w}")
                         print("BLOCK BOARD: ")
-                        for x in range(pp.width):
-                            row = [str(board[x][y]) for y in range(pp.height)]
-                            pp.pipeOut(" ".join(row))
                         board[i][j] = 0
                         ai_made_move = True
                         print(f"I {z} J {w}")
@@ -198,6 +183,17 @@ def brain_block(x, y):
     else:
         pp.pipeOut("ERROR winning move [{},{}]".format(x, y))
 
+if DEBUG_EVAL and platform.system() == "Windows":
+    import win32gui
+    def brain_eval(x, y):
+        wnd = win32gui.GetForegroundWindow()
+        dc = win32gui.GetDC(wnd)
+        rc = win32gui.GetClientRect(wnd)
+        c = str(board[x][y])
+        win32gui.ExtTextOut(dc, rc[2]-15, 3, 0, None, c, ())
+        win32gui.ReleaseDC(wnd, dc)
+    
+
 pp.brain_init = brain_init
 pp.brain_turn = brain_turn
 pp.brain_my = brain_my
@@ -205,6 +201,8 @@ pp.brain_end = brain_end
 pp.brain_about = brain_about
 pp.brain_opponents = brain_opponents
 pp.brain_block = brain_block
+if DEBUG_EVAL and platform.system() == "Windows":
+    pp.brain_eval = brain_eval
 
 def main():
     pp.main()
