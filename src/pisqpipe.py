@@ -99,8 +99,8 @@ def get_line():
 
 def parse_coord(param):
 	"""parse coordinates x,y"""
-	if param.count(",") != 1:
-		return None
+	if param.count(",") != 1 or "." in param:
+		return None, None
 	x, comma, y = param.partition(',')
 	x, y = [safeInt(v) for v in (x, y)]
 	if any(v is None for v in (x,y)):
