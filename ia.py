@@ -19,8 +19,8 @@ pp.infotext = 'name="AI", author="Andrea Mancion", version="1.0", country="Franc
 MAX_BOARD = 50
 board = [[0 for i in range(MAX_BOARD)] for j in range(MAX_BOARD)]
 
-EASY = True
-MEDIUM = False
+EASY = False
+MEDIUM = True
 HARD = False
 ai_made_move = False
 counter = 0
