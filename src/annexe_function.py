@@ -121,3 +121,25 @@ def select_best_move(board, x, y):
                 best_move = (i, j)
                 best_score = score 
     return best_score
+
+def placePion(board):
+    for i in range(pp.width):
+        for j in range(pp.height):
+            if board[i][j] == 1:
+                if (board[i + 1][j] == 0):
+                    return i + 1, j
+                elif (board[i - 1][j] == 0):
+                    return i - 1, j
+                elif (board[i][j + 1] == 0):
+                    return i, j + 1
+                elif (board[i][j - 1] == 0):
+                    return i, j - 1
+                elif (board[i + 1][j + 1] == 0):
+                    return i + 1, j + 1
+                elif (board[i - 1][j - 1] == 0):
+                    return i - 1, j - 1
+                elif (board[i + 1][j - 1] == 0):
+                    return i + 1, j - 1
+                elif (board[i - 1][j + 1] == 0):
+                    return i - 1, j + 1
+                

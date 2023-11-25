@@ -12,7 +12,7 @@ import platform
 import pisqpipe as pp
 from pisqpipe import DEBUG_EVAL, DEBUG
 import copy
-from annexe_function import play_random_game, backpropagate, select_best_move, is_game_over, evaluate, For_block_opp, isFree
+from annexe_function import play_random_game, backpropagate, select_best_move, is_game_over, evaluate, For_block_opp, isFree, placePion
 
 pp.infotext = 'name="AI", author="Andrea Mancion", version="1.0", country="France", www="https://github.com/stranskyjan/pbrain-pyrandom"'
 
@@ -92,7 +92,13 @@ def medium_mode(i):
     else:
         x, y = best_move
         pp.do_mymove(x, y)
-
+        
+def checkAiPion():
+    for i in range(pp.width):
+        for j in range(pp.height):
+            if board[i][j] == 1:
+                return True
+    return False
     
 def brain_turn():
     global ai_made_move
@@ -103,7 +109,11 @@ def brain_turn():
         if EASY:
             easy_mode(i)
         elif MEDIUM:
-            medium_mode(i)
+            if checkAiPion():
+                x, y = placePion(board)
+                pp.do_mymove(x, y)
+            else:
+                medium_mode(i)
     ai_made_move = False
     print("REEAL BOARD: ")
     for i in range(pp.width):
