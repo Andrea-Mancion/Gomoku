@@ -147,21 +147,15 @@ def brain_about():
 def block_opponent_moves():
     global ai_made_move
     global counter
+    if ai_made_move:
+        return
     for i in range(pp.width):
         for j in range(pp.height):
             if isFree(i, j, board):
                 board[i][j] = 2
                 victory, z, w = For_block_opp(board, 2)
                 if victory:
-                    if counter == 0:
-                        counter += 1
-                        print(f"JE VAIS LA JE BLOQUE {i} {j}")
-                        board[i][j] = 0
-                        ai_made_move = True
-                        print(f"I {i} J {j}")
-                        pp.do_mymove(i, j)
-                        return
-                    if counter % 2 == 0:
+                    if counter == 0 or counter % 2 == 0:
                         counter += 1
                         print(f"JE VAIS LA JE BLOQUE {i} {j}")
                         board[i][j] = 0
