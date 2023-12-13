@@ -126,20 +126,58 @@ def placePion(board):
     for i in range(pp.width):
         for j in range(pp.height):
             if board[i][j] == 1:
-                if (board[i + 1][j] == 0):
-                    return i + 1, j
-                elif (board[i - 1][j] == 0):
-                    return i - 1, j
-                elif (board[i][j + 1] == 0):
-                    return i, j + 1
-                elif (board[i][j - 1] == 0):
-                    return i, j - 1
-                elif (board[i + 1][j + 1] == 0):
-                    return i + 1, j + 1
-                elif (board[i - 1][j - 1] == 0):
-                    return i - 1, j - 1
-                elif (board[i + 1][j - 1] == 0):
-                    return i + 1, j - 1
-                elif (board[i - 1][j + 1] == 0):
-                    return i - 1, j + 1
+                if (board[i + 1][j] == 1 or board[i - 1][j] == 1):
+                    if (board[i + 1][j] == 0):
+                        print("1.1")
+                        print(f"i = {i}, j = {j}")
+                        return i + 1, j
+                    elif (board[i - 1][j] == 0):
+                        print("1.2")
+                        return i - 1, j
+                elif (board[i][j + 1] == 1 or board[i][j - 1] == 1):
+                    if (board[i][j + 1] == 0):
+                        print("2.1")
+                        return i, j + 1
+                    elif (board[i][j - 1] == 0):
+                        print("2.2")
+                        return i, j - 1
+                elif (board[i + 1][j + 1] == 1 or board[i - 1][j - 1] == 1 or board[i + 1][j - 1] == 1 or board[i - 1][j + 1] == 1):
+                    if (board[i + 1][j + 1] == 0):
+                        print("3.1")
+                        return i + 1, j + 1
+                    elif (board[i - 1][j - 1] == 0):
+                        print("3.2")
+                        return i - 1, j - 1
+                    elif (board[i + 1][j - 1] == 0):
+                        print("3.3")
+                        return i + 1, j - 1
+                    elif (board[i - 1][j + 1] == 0):
+                        print("3.4")
+                        return i - 1, j + 1
+                else: 
+                    if (board[i + 1][j] == 0):
+                        print("1")
+                        print(f"i = {i}, j = {j}")
+                        return i + 1, j
+                    elif (board[i - 1][j] == 0):
+                        print("2")
+                        return i - 1, j
+                    elif (board[i][j + 1] == 0):
+                        print("3")
+                        return i, j + 1
+                    elif (board[i][j - 1] == 0):
+                        print("4")
+                        return i, j - 1
+                    elif (board[i + 1][j + 1] == 0):
+                        print("5")
+                        return i + 1, j + 1
+                    elif (board[i - 1][j - 1] == 0):
+                        print("6")
+                        return i - 1, j - 1
+                    elif (board[i + 1][j - 1] == 0):
+                        print("7")
+                        return i + 1, j - 1
+                    elif (board[i - 1][j + 1] == 0):
+                        print("8")
+                        return i - 1, j + 1
                 

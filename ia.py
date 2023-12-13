@@ -110,7 +110,9 @@ def brain_turn():
             easy_mode(i)
         elif MEDIUM:
             if checkAiPion():
+                print("OK?")
                 x, y = placePion(board)
+                print(f"I {x} J {y}")
                 pp.do_mymove(x, y)
             else:
                 medium_mode(i)
