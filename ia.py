@@ -161,7 +161,12 @@ def block_opponent_moves():
                         counter += 1
                         print(f"JE VAIS LA JE BLOQUE {i} {j}")
                         board[i][j] = 0
-                        if i == 0 or j == 0:
+                        print(f"AGAIN I {i} J {j}")
+                        if (i == 0 and j == 0) or (i == pp.width - 1 or j == pp.height - 1):
+                            ai_made_move = True
+                            pp.do_mymove(i, j)
+                            return
+                        elif i == 0 or j == 0 or i == pp.width - 1 or j == pp.height - 1:
                             ai_made_move = True
                             pp.do_mymove(z, w)
                             return

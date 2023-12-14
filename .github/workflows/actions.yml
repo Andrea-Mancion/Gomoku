@@ -207,8 +207,17 @@ jobs:
     - name: Block Corner Vertical
       run: |
         echo "BOARD
-        0,20,2
-        1,20,2
-        2,20,2
-        3,20,2
+        0,19,2
+        1,19,2
+        2,19,2
+        3,19,2
+        DONE" | python ia.py
+
+    - name: Block Corner Vertical Test
+      run: |
+        echo "BOARD
+        1,19,2
+        2,19,2
+        3,19,2
+        4,19,2
         DONE" | python ia.py
