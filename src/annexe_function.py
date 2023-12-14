@@ -127,31 +127,31 @@ def placePion(board):
         for j in range(pp.height):
             if board[i][j] == 1:
                 if (board[i + 1][j] == 1 or board[i - 1][j] == 1):
-                    if (board[i + 1][j] == 0):
+                    if (board[i + 1][j] == 0 and i + 1 <= pp.width):
                         print("1.1")
                         print(f"i = {i}, j = {j}")
                         return i + 1, j
-                    elif (board[i - 1][j] == 0):
+                    elif (board[i - 1][j] == 0 and i - 1 >= 0):
                         print("1.2")
                         return i - 1, j
                 elif (board[i][j + 1] == 1 or board[i][j - 1] == 1):
-                    if (board[i][j + 1] == 0):
+                    if (board[i][j + 1] == 0 and j + 1 <= pp.height):
                         print("2.1")
                         return i, j + 1
-                    elif (board[i][j - 1] == 0):
+                    elif (board[i][j - 1] == 0 and j - 1 >= 0):
                         print("2.2")
                         return i, j - 1
                 elif (board[i + 1][j + 1] == 1 or board[i - 1][j - 1] == 1 or board[i + 1][j - 1] == 1 or board[i - 1][j + 1] == 1):
-                    if (board[i + 1][j + 1] == 0):
+                    if (board[i + 1][j + 1] == 0 and i + 1 <= pp.width and j + 1 <= pp.height):
                         print("3.1")
                         return i + 1, j + 1
-                    elif (board[i - 1][j - 1] == 0):
+                    elif (board[i - 1][j - 1] == 0 and i - 1 >= 0 and j - 1 >= 0):
                         print("3.2")
                         return i - 1, j - 1
-                    elif (board[i + 1][j - 1] == 0):
+                    elif (board[i + 1][j - 1] == 0 and i + 1 <= pp.width and j - 1 >= 0):
                         print("3.3")
                         return i + 1, j - 1
-                    elif (board[i - 1][j + 1] == 0):
+                    elif (board[i - 1][j + 1] == 0 and i - 1 >= 0 and j + 1 <= pp.height):
                         print("3.4")
                         return i - 1, j + 1
                 else: 
