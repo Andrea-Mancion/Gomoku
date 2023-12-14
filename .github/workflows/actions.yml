@@ -194,3 +194,21 @@ jobs:
         2,0,2
         3,0,2
         DONE" | python ia.py
+
+    - name: Block Vertical test
+      run: |
+        echo "BOARD
+        1,0,2
+        2,0,2
+        3,0,2
+        4,0,2
+        DONE" | python ia.py
+        
+    - name: Block Corner Vertical
+      run: |
+        echo "BOARD
+        0,20,2
+        1,20,2
+        2,20,2
+        3,20,2
+        DONE" | python ia.py
