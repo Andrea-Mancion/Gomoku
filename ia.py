@@ -12,7 +12,7 @@ import platform
 import pisqpipe as pp
 from pisqpipe import DEBUG_EVAL, DEBUG
 import copy
-from annexe_function import play_random_game, backpropagate, select_best_move, is_game_over, evaluate, For_block_opp, isFree, placePion
+from annexe_function import play_random_game, backpropagate, select_best_move, is_game_over, evaluate, For_block_opp, isFree, placePion, generate_patterns, find_best_move_for_pattern
 
 pp.infotext = 'name="AI", author="Andrea Mancion", version="1.0", country="France", www="https://github.com/stranskyjan/pbrain-pyrandom"'
 
@@ -117,20 +117,17 @@ def pattern_matching_mode():
                 best_move = (x, y)
                 best_score = score
 
-    # Génère tous les motifs possibles à partir du plateau actuel
     all_patterns = generate_patterns(board)
 
-    # Compare les motifs générés avec un motif prédéfini
-    target_pattern = [0, 1, 1, 1, 0]  # Exemple de motif cible (1 = position de l'IA)
+    target_pattern = [0, 1, 1, 1, 0]
     for i, pattern in enumerate(all_patterns):
         if pattern == target_pattern:
-            # Si le motif est trouvé, sélectionne la meilleure position
             best_move = find_best_move_for_pattern(board, i, len(pattern))
 
     if best_move is not None:
         x, y = best_move
         pp.do_mymove(x, y)
-    
+
 def brain_turn():
     global ai_made_move
     if pp.terminateAI:

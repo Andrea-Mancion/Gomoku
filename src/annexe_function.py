@@ -180,4 +180,35 @@ def placePion(board):
                     elif (board[i - 1][j + 1] == 0):
                         print("8")
                         return i - 1, j + 1
-                
+
+def generate_patterns(board):
+    patterns = []
+    for i in range(pp.width):
+        for j in range(pp.height):
+            pattern = [board[i][j + k] for k in range(5) if j + k < pp.height]
+            patterns.append(pattern)
+    return patterns
+
+def find_best_move_for_pattern(board, pattern_index, pattern_size):
+    rows = pp.width - pattern_size + 1
+    cols = pp.height if pattern_size == 1 else pp.height - pattern_size + 1
+    x = pattern_index // cols
+    y = pattern_index % cols
+
+    for i in range(pattern_size):
+        # Vérification horizontale
+        if not isFree(x + i, y):
+            return None
+
+        # Vérification verticale
+        if not isFree(x, y + i):
+            return None
+
+        # Vérification diagonale vers le bas
+        if not isFree(x + i, y + i):
+            return None
+
+        # Vérification diagonale vers le haut
+        if not isFree(x - i, y + i):
+            return None
+    return x, y
