@@ -143,8 +143,14 @@ def placePion(board):
                         return i, j - 1
                 elif (board[i + 1][j + 1] == 1 or board[i - 1][j - 1] == 1 or board[i + 1][j - 1] == 1 or board[i - 1][j + 1] == 1):
                     if (board[i + 1][j + 1] == 0 and i + 1 <= pp.width and j + 1 <= pp.height):
-                        print("3.1")
-                        return i + 1, j + 1
+                        board[i + 1][j + 1] = 1
+                        victory, z, w = For_block_opp(board, 1)
+                        if victory:
+                            print("3.1")
+                            board[i + 1][j + 1] = 0
+                            print("YEH")
+                            return z, w
+                        continue
                     elif (board[i - 1][j - 1] == 0 and i - 1 >= 0 and j - 1 >= 0):
                         print("3.2")
                         return i - 1, j - 1
