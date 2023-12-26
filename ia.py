@@ -22,6 +22,7 @@ board = [[0 for i in range(MAX_BOARD)] for j in range(MAX_BOARD)]
 EASY = False
 MEDIUM = True
 HARD = False
+PATTERN_MATCHING = False
 ai_made_move = False
 counter = 0
 
@@ -99,6 +100,36 @@ def checkAiPion():
             if board[i][j] == 1:
                 return True
     return False
+
+def pattern_matching_mode():
+    num_simulations = 4
+    best_move = None
+    best_score = -1
+
+    for _ in range(num_simulations):
+        x = random.randint(0, pp.width - 1)
+        y = random.randint(0, pp.height - 1)
+        if pp.terminateAI:
+            return
+        if isFree(x, y):
+            score = simulate(x, y)
+            if score > best_score:
+                best_move = (x, y)
+                best_score = score
+
+    # Génère tous les motifs possibles à partir du plateau actuel
+    all_patterns = generate_patterns(board)
+
+    # Compare les motifs générés avec un motif prédéfini
+    target_pattern = [0, 1, 1, 1, 0]  # Exemple de motif cible (1 = position de l'IA)
+    for i, pattern in enumerate(all_patterns):
+        if pattern == target_pattern:
+            # Si le motif est trouvé, sélectionne la meilleure position
+            best_move = find_best_move_for_pattern(board, i, len(pattern))
+
+    if best_move is not None:
+        x, y = best_move
+        pp.do_mymove(x, y)
     
 def brain_turn():
     global ai_made_move
@@ -116,6 +147,8 @@ def brain_turn():
                 pp.do_mymove(x, y)
             else:
                 medium_mode(i)
+        elif PATTERN_MATCHING:
+            pattern_matching_mode()
     ai_made_move = False
     print("REEAL BOARD: ")
     for i in range(pp.width):
