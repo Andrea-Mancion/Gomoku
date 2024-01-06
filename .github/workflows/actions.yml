@@ -221,3 +221,38 @@ jobs:
         3,19,2
         4,19,2
         DONE" | python ia.py
+
+    - name: Vertical case 4
+      run: |
+        echo "BOARD
+        7,10,1
+        8,10,1
+        9,10,1
+        11,10,1
+        DONE" | python ia.py
+
+    - name: Vertical block by the player
+      run: |
+        echo "BOARD
+        10,10,1
+        11,10,1
+        12,10,1
+        13,10,2
+        DONE" | python ia.py
+
+    - name: Vertical with a lot of spaces
+      run: |
+        echo "BOARD
+        5,10,1
+        
+        7,10,1
+        
+        9,10,1
+        10,10,1
+        DONE" | python ia.py
+
+    - name: Vertical with one stone
+      run: |
+        echo "BOARD
+        10,10,1
+        DONE" | python ia.py
