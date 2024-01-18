@@ -193,14 +193,17 @@ def block_opponent_moves():
                         board[i][j] = 0
                         print(f"AGAIN I {i} J {j}")
                         if (i == 0 and j == 0) or (i == 0 and j == pp.height - 1) or (i == pp.width - 1 and j == 0) or (i == pp.width - 1 and j == pp.height - 1):
+                            print("case 1")
                             ai_made_move = True
                             pp.do_mymove(i, j)
                             return
                         elif i == 0 or j == 0 or i == pp.width - 1 or j == pp.height - 1:
+                            print("case 2")
                             ai_made_move = True
                             pp.do_mymove(z, w)
                             return
                         else:
+                            print("case 3")
                             ai_made_move = True
                             print(f"I {i} J {j}")
                             pp.do_mymove(i, j)
@@ -219,6 +222,18 @@ def block_opponent_moves():
 def brain_opponents(x, y):
     if isFree(x, y, board):
         board[x][y] = 2
+        victory, z, w = For_block_opp(board, 1)
+        if victory:
+            print(f"I {z} J {w}")
+            pp.do_mymove(z, w)
+            if is_game_over(board):
+                pp.pipeOut("INFO game over")
+                winner = evaluate(board)
+                if winner == -1:
+                    pp.pipeOut("Winner is opponent")
+                elif winner == 1:
+                    pp.pipeOut("Winner is AI")
+                sys.exit(0)
         block_opponent_moves()
     else:
         pp.pipeOut("ERROR opponents's move [{},{}]".format(x, y))
