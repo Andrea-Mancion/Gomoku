@@ -256,3 +256,27 @@ jobs:
         echo "BOARD
         10,10,1
         DONE" | python ia.py
+
+    - name: Horizontal Win and defense
+      run: |
+        echo "BOARD
+        10,10,1
+        10,11,1
+        10,12,1
+        10,13,1
+        0,1,2
+        0,2,2
+        0,3,2
+        DONE" | python ia.py
+
+    - name: Vertical Win and defense
+      run: |
+        echo "BOARD
+        10,10,1
+        11,10,1
+        12,10,1
+        12,10,1
+        0,1,2
+        1,1,2
+        2,1,2
+        DONE" | python ia.py
