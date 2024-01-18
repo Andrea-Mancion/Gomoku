@@ -125,7 +125,25 @@ def select_best_move(board, x, y):
 def placePion(board):
     for i in range(pp.width):
         for j in range(pp.height):
-            if board[i][j] == 1:
+            if board[i][j] == 1 and board[i][j + 1] == 1 and board[i][j + 2] == 1 and board[i][j + 3] == 0 and board[i][j + 4] == 1:
+                print("Found pattern horizontally")
+                return i, j + 3
+            elif board[i][j] == 1 and board[i + 1][j] == 1 and board[i + 2][j] == 1 and board[i + 3][j] == 0 and board[i + 4][j] == 1:
+                print("Found pattern Vertically")
+                return i + 3, j
+            elif board[i][j] == 1 and board[i + 1][j + 1] == 1 and board[i + 2][j + 2] == 1 and board[i + 3][j + 3] == 0 and board[i + 4][j + 4] == 1:
+                print("Found pattern Diagonally 1")
+                return i + 3, j + 3
+            elif board[i][j] == 1 and board[i - 1][j + 1] == 1 and board[i - 2][j + 2] == 1 and board[i - 3][j + 3] == 0 and board[i - 4][j + 4] == 1:
+                print("Found pattern Diagonally 2")
+                return i - 3, j + 3
+            elif board[i][j] == 1 and board[i + 1][j - 1] == 1 and board[i + 2][j - 2] == 1 and board[i + 3][j - 3] == 0 and board[i + 4][j - 4] == 1:
+                print("Found pattern Diagonally 3")
+                return i + 3, j - 3
+            elif board[i][j] == 1 and board[i - 1][j - 1] == 1 and board[i - 2][j - 2] == 1 and board[i - 3][j - 3] == 0 and board[i - 4][j - 4] == 1:
+                print("Found pattern Diagonally 4")
+                return i - 3, j - 3
+            elif board[i][j] == 1:
                 if (board[i + 1][j] == 1 or board[i - 1][j] == 1):
                     if (board[i + 1][j] == 0 and i + 1 <= pp.width):
                         print("1.1")

@@ -231,6 +231,51 @@ jobs:
         11,10,1
         DONE" | python ia.py
 
+    - name: Horizontal case 4
+      run: |
+        echo "BOARD
+        7,10,1
+        7,11,1
+        7,12,1
+        7,14,1
+        DONE" | python ia.py
+
+    - name: Diagonal Down-Right Case 4
+      run: |
+        echo "BOARD
+        7,10,1
+        8,11,1
+        9,12,1
+        11,14,1
+        DONE" | python ia.py
+
+    - name: Diagonal Up-Right Case 4
+      run: |
+        echo "BOARD
+        11,10,1
+        10,11,1
+        9,12,1
+        7,14,1
+        DONE" | python ia.py
+
+    - name: Diagonal Down-Right Case 5
+      run: |
+        echo "BOARD
+        7,10,1
+        8,9,1
+        9,8,1
+        11,6,1
+        DONE" | python ia.py
+
+    - name: Diagonal Up-Right Case 5
+      run: |
+        echo "BOARD
+        11,10,1
+        10,9,1
+        9,8,1
+        7,6,1
+        DONE" | python ia.py
+
     - name: Vertical block by the player
       run: |
         echo "BOARD
