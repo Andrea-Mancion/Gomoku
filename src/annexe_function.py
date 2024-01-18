@@ -185,31 +185,32 @@ def placePion(board):
                         print("3.4")
                         return i - 1, j + 1
                 else: 
-                    if (board[i + 1][j] == 0):
+                    if (board[i + 1][j] == 0 and i + 1 <= pp.width):
                         print("1")
                         print(f"i = {i}, j = {j}")
                         return i + 1, j
-                    elif (board[i - 1][j] == 0):
+                    elif (board[i - 1][j] == 0 and i - 1 >= 0):
                         print("2")
                         return i - 1, j
-                    elif (board[i][j + 1] == 0):
+                    elif (board[i][j + 1] == 0 and j + 1 <= pp.height):
                         print("3")
                         return i, j + 1
-                    elif (board[i][j - 1] == 0):
+                    elif (board[i][j - 1] == 0 and j - 1 >= 0):
                         print("4")
                         return i, j - 1
-                    elif (board[i + 1][j + 1] == 0):
+                    elif (board[i + 1][j + 1] == 0 and i + 1 <= pp.width and j + 1 <= pp.height):
                         print("5")
                         return i + 1, j + 1
-                    elif (board[i - 1][j - 1] == 0):
+                    elif (board[i - 1][j - 1] == 0 and i - 1 >= 0 and j - 1 >= 0):
                         print("6")
                         return i - 1, j - 1
-                    elif (board[i + 1][j - 1] == 0):
+                    elif (board[i + 1][j - 1] == 0 and i + 1 <= pp.width and j - 1 >= 0):
                         print("7")
                         return i + 1, j - 1
-                    elif (board[i - 1][j + 1] == 0):
+                    elif (board[i - 1][j + 1] == 0 and i - 1 >= 0 and j + 1 <= pp.height):
                         print("8")
                         return i - 1, j + 1
+    return 0, 0
 
 def generate_patterns(board):
     patterns = []
