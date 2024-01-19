@@ -129,13 +129,24 @@ def check_up_right(board, i, j):
             return True, i - 3, j + 3
     return False, 0, 0
 
+def check_up_left(board, i, j):
+    if i - 4 >= 0 and j - 4 >= 0:
+        diagonal = [board[x][y] for x, y in zip(range(i, i - 5, -1), range(j, j - 5, -1))]
+        if diagonal == [1, 1, 1, 0, 1]:
+            return True, i - 3, j - 3
+    return False, 0, 0
+
 def checkVictory(board):
     for i in range(pp.width):
         for j in range(pp.height):
             victory, x, y = check_up_right(board, i, j)
+            victory2, z, w = check_up_left(board, i, j)
             if victory:
                 print("YEEEAH THAT4S TRUE")
                 return True, x, y
+            elif victory2:
+                print("YEEEAH THAT4S TRUE UP LEFT")
+                return True, z, w
     return False, 0, 0
 
 def placePionV2(board, i, j):
