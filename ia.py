@@ -97,7 +97,7 @@ def medium_mode(i):
 def checkAiPion():
     for i in range(pp.width):
         for j in range(pp.height):
-            if board[i][j] == 1 and board[i + 1][j] == 0 and board[i - 1][j] == 0 and board[i][j + 1] == 0 and board[i][j - 1] == 0 and board[i + 1][j + 1] == 0 and board[i - 1][j - 1] == 0 and board[i + 1][j - 1] == 0 and board[i - 1][j + 1] == 0:
+            if board[i][j] == 1:
                 return True
     return False
 
