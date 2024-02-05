@@ -325,3 +325,72 @@ jobs:
         1,1,2
         2,1,2
         DONE" | python ia.py
+
+    - name: Horizontal attack win with space
+      run: |
+        echo "BOARD
+        10,10,1
+        10,11,1
+        10,12,1
+        10,14,1
+        DONE" | python ia.py
+
+    - name: Horizontal attack with space
+      run: |
+        echo "BOARD
+        10,10,1
+        10,11,1
+        10,13,1
+        DONE" | python ia.py
+
+    - name: Vertical attack win with space
+      run: |
+        echo "BOARD
+        10,10,1
+        11,10,1
+        12,10,1
+        14,10,1
+        DONE" | python ia.py
+
+    - name: Vertical attack with space
+      run: |
+        echo "BOARD
+        10,10,1
+        11,10,1
+        13,10,1
+        DONE" | python ia.py
+
+
+    - name: Horizontal defense win with space
+      run: |
+        echo "BOARD
+        10,10,2
+        10,11,2
+        10,12,2
+        10,14,2
+        DONE" | python ia.py
+  
+    - name: Horizontal defense with space
+      run: |
+        echo "BOARD
+        10,10,2
+        10,11,2
+        10,13,2
+        DONE" | python ia.py
+  
+    - name: Vertical defense win with space
+      run: |
+        echo "BOARD
+        10,10,2
+        11,10,2
+        12,10,2
+        14,10,2
+        DONE" | python ia.py
+  
+    - name: Vertical defense with space
+      run: |
+        echo "BOARD
+        10,10,2
+        11,10,2
+        13,10,2
+        DONE" | python ia.py

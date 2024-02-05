@@ -122,25 +122,25 @@ def select_best_move(board, x, y):
                 best_score = score 
     return best_score
 
-def check_up_right(board, i, j):
+def check_up_right(board, i, j, player):
     if i - 4 >= 0 and j + 4 < pp.height:
         diagonal = [board[x][y] for x, y in zip(range(i, i - 5, -1), range(j, j + 5))]
-        if diagonal == [1, 1, 1, 0, 1]:
+        if diagonal == [player, player, player, 0, player]:
             return True, i - 3, j + 3
     return False, 0, 0
 
-def check_up_left(board, i, j):
+def check_up_left(board, i, j, player):
     if i - 4 >= 0 and j - 4 >= 0:
         diagonal = [board[x][y] for x, y in zip(range(i, i - 5, -1), range(j, j - 5, -1))]
-        if diagonal == [1, 1, 1, 0, 1]:
+        if diagonal == [player, player, player, 0, player]:
             return True, i - 3, j - 3
     return False, 0, 0
 
-def checkVictory(board):
+def checkVictory(board, player):
     for i in range(pp.width):
         for j in range(pp.height):
-            victory, x, y = check_up_right(board, i, j)
-            victory2, z, w = check_up_left(board, i, j)
+            victory, x, y = check_up_right(board, i, j, player)
+            victory2, z, w = check_up_left(board, i, j, player)
             if victory:
                 print("YEEEAH THAT4S TRUE")
                 return True, x, y
@@ -169,7 +169,32 @@ def placePionV2(board, i, j):
         print("Found pattern Diagonally 4")
         return True, i - 3, j - 3
     else:
-        victory, x, y = checkVictory(board)
+        victory, x, y = checkVictory(board, 1)
+        if victory:
+            return True, x, y
+    return False, 0, 0
+
+def hasToBlock(board, i, j):
+    if board[i][j] == 2 and board[i][j + 1] == 2 and board[i][j + 2] == 2 and board[i][j + 3] == 0 and board[i][j + 4] == 2:
+        print("Found pattern horizontally")
+        return True, i, j + 3
+    elif board[i][j] == 2 and board[i + 1][j] == 2 and board[i + 2][j] == 2 and board[i + 3][j] == 0 and board[i + 4][j] == 2:
+        print("Found pattern Vertically")
+        return True, i + 3, j
+    elif board[i][j] == 2 and board[i + 1][j + 1] == 2 and board[i + 2][j + 2] == 2 and board[i + 3][j + 3] == 0 and board[i + 4][j + 4] == 2:
+        print("Found pattern Diagonally 1")
+        return True, i + 3, j + 3
+    elif board[i][j] == 2 and board[i - 1][j + 1] == 2 and board[i - 2][j + 2] == 2 and board[i - 3][j + 3] == 0 and board[i - 4][j + 4] == 2:
+        print("Found pattern Diagonally 2")
+        return True, i - 3, j + 3
+    elif board[i][j] == 2 and board[i + 1][j - 1] == 2 and board[i + 2][j - 2] == 2 and board[i + 3][j - 3] == 0 and board[i + 4][j - 4] == 2:
+        print("Found pattern Diagonally 3")
+        return True, i + 3, j - 3
+    elif board[i][j] == 2 and board[i - 1][j - 1] == 2 and board[i - 2][j - 2] == 2 and board[i - 3][j - 3] == 0 and board[i - 4][j - 4] == 2:
+        print("Found pattern Diagonally 4")
+        return True, i - 3, j - 3
+    else:
+        victory, x, y = checkVictory(board, 2)
         if victory:
             return True, x, y
     return False, 0, 0
@@ -177,6 +202,7 @@ def placePionV2(board, i, j):
 def placePion(board):
     for i in range(pp.width):
         for j in range(pp.height):
+            # Check the other cases than 1,1,1,0,1. Idem for the oppponent
             place, x, z = placePionV2(board, i, j)
             if place:
                 return x, z
