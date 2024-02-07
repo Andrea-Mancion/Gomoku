@@ -149,99 +149,56 @@ def checkVictory(board):
                 return True, z, w
     return False, 0, 0
 
-def placePionV2(board, i, j):
-    if board[i][j] == 1 and board[i][j + 1] == 1 and board[i][j + 2] == 1 and board[i][j + 3] == 0 and board[i][j + 4] == 1:
-        print("Found pattern horizontally")
-        return True, i, j + 3
-    elif board[i][j] == 1 and board[i + 1][j] == 1 and board[i + 2][j] == 1 and board[i + 3][j] == 0 and board[i + 4][j] == 1:
-        print("Found pattern Vertically")
-        return True, i + 3, j
-    elif board[i][j] == 1 and board[i + 1][j + 1] == 1 and board[i + 2][j + 2] == 1 and board[i + 3][j + 3] == 0 and board[i + 4][j + 4] == 1:
-        print("Found pattern Diagonally 1")
-        return True, i + 3, j + 3
-    elif board[i][j] == 1 and board[i - 1][j + 1] == 1 and board[i - 2][j + 2] == 1 and board[i - 3][j + 3] == 0 and board[i - 4][j + 4] == 1:
-        print("Found pattern Diagonally 2")
-        return True, i - 3, j + 3
-    elif board[i][j] == 1 and board[i + 1][j - 1] == 1 and board[i + 2][j - 2] == 1 and board[i + 3][j - 3] == 0 and board[i + 4][j - 4] == 1:
-        print("Found pattern Diagonally 3")
-        return True, i + 3, j - 3
-    elif board[i][j] == 1 and board[i - 1][j - 1] == 1 and board[i - 2][j - 2] == 1 and board[i - 3][j - 3] == 0 and board[i - 4][j - 4] == 1:
-        print("Found pattern Diagonally 4")
-        return True, i - 3, j - 3
-    else:
-        victory, x, y = checkVictory(board)
-        if victory:
-            return True, x, y
-    return False, 0, 0
+def score_line(board, dir_i, dir_j, i, j):
+    score = 0
+    for x in range(5):
+        new_i, new_j = i + (dir_i * x), j + (dir_j * x)
+        if 0 <= new_i < pp.height and 0 <= new_j < pp.width:
+            if board[new_i][new_j] == 1:
+                score = score + 1
 
-def placePion(board):
+    return score
+
+def evaluate_board(board,i, j):
+    score = 0
+
+    # HG, G, BG, B, BD, D, HD, H
+    directions = [(-1, -1), (0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0)]
+
+    for dir_i, dir_j in directions:
+        score += score_line(board, dir_i, dir_j, i, j)
+
+    return score
+
+def findBestMove(boardScore):
+    score = {"x": -1, "y": -1, "score": -1}
+
     for i in range(pp.width):
         for j in range(pp.height):
-            place, x, z = placePionV2(board, i, j)
-            if place:
-                return x, z
-            elif board[i][j] == 1:
-                if (board[i + 1][j] == 1 or board[i - 1][j] == 1):
-                    if (board[i + 1][j] == 0 and i + 1 <= pp.width):
-                        print("1.1")
-                        print(f"i = {i}, j = {j}")
-                        return i + 1, j
-                    elif (board[i - 1][j] == 0 and i - 1 >= 0):
-                        print("1.2")
-                        return i - 1, j
-                elif (board[i][j + 1] == 1 or board[i][j - 1] == 1):
-                    if (board[i][j + 1] == 0 and j + 1 <= pp.height):
-                        print("2.1")
-                        return i, j + 1
-                    elif (board[i][j - 1] == 0 and j - 1 >= 0):
-                        print("2.2")
-                        return i, j - 1
-                elif (board[i + 1][j + 1] == 1 or board[i - 1][j - 1] == 1 or board[i + 1][j - 1] == 1 or board[i - 1][j + 1] == 1):
-                    if (board[i + 1][j + 1] == 0 and i + 1 <= pp.width and j + 1 <= pp.height):
-                        board[i + 1][j + 1] = 1
-                        victory, z, w = For_block_opp(board, 1)
-                        if victory:
-                            print("3.1")
-                            board[i + 1][j + 1] = 0
-                            print("YEH")
-                            return z, w
-                        continue
-                    elif (board[i - 1][j - 1] == 0 and i - 1 >= 0 and j - 1 >= 0):
-                        print("3.2")
-                        return i - 1, j - 1
-                    elif (board[i + 1][j - 1] == 0 and i + 1 <= pp.width and j - 1 >= 0):
-                        print("3.3")
-                        return i + 1, j - 1
-                    elif (board[i - 1][j + 1] == 0 and i - 1 >= 0 and j + 1 <= pp.height):
-                        print("3.4")
-                        return i - 1, j + 1
-                else:
-                    if (board[i + 1][j] == 0 and i + 1 <= pp.width):
-                        print("1")
-                        print(f"i = {i}, j = {j}")
-                        return i + 1, j
-                    elif (board[i - 1][j] == 0 and i - 1 >= 0):
-                        print("2")
-                        return i - 1, j
-                    elif (board[i][j + 1] == 0 and j + 1 <= pp.height):
-                        print("3")
-                        return i, j + 1
-                    elif (board[i][j - 1] == 0 and j - 1 >= 0):
-                        print("4")
-                        return i, j - 1
-                    elif (board[i + 1][j + 1] == 0 and i + 1 <= pp.width and j + 1 <= pp.height):
-                        print("5")
-                        return i + 1, j + 1
-                    elif (board[i - 1][j - 1] == 0 and i - 1 >= 0 and j - 1 >= 0):
-                        print("6")
-                        return i - 1, j - 1
-                    elif (board[i + 1][j - 1] == 0 and i + 1 <= pp.width and j - 1 >= 0):
-                        print("7")
-                        return i + 1, j - 1
-                    elif (board[i - 1][j + 1] == 0 and i - 1 >= 0 and j + 1 <= pp.height):
-                        print("8")
-                        return i - 1, j + 1
-    return 0, 0
+            if boardScore[i][j] > score.get("score"):
+                score = {"x": i, "y": j, "score": boardScore[i][j]}
+    return score.get("x"), score.get("y")
+
+def placePion(board):
+    boardScore = [[0 for i in range(pp.height)] for j in range(pp.width)]
+
+    for i in range(pp.width):
+        for j in range(pp.height):
+            if board[i][j] == 0:
+                boardScore[i][j] = evaluate_board(board, i, j)
+            if board[i][j] == 1:
+                boardScore[i][j] = -1
+            if board[i][j] == 2:
+                boardScore[i][j] = -2
+
+    print("--------------------------------------Score----------------------------")
+    for x in range(pp.width):
+        print(boardScore[x])
+    print("--------------------------------------END Score----------------------------")
+
+    print("findBestMove = " + findBestMove(boardScore).__str__())
+    return findBestMove(boardScore)
+
 
 def generate_patterns(board):
     patterns = []
