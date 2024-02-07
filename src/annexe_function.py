@@ -191,12 +191,6 @@ def placePion(board):
             if board[i][j] == 2:
                 boardScore[i][j] = -2
 
-    print("--------------------------------------Score----------------------------")
-    for x in range(pp.width):
-        print(boardScore[x])
-    print("--------------------------------------END Score----------------------------")
-
-    print("findBestMove = " + findBestMove(boardScore).__str__())
     return findBestMove(boardScore)
 
 
