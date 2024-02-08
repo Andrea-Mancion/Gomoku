@@ -8,8 +8,8 @@ def isFree(x, y, board):
     return x >= 0 and y >= 0 and x < pp.width and y < pp.height and board[x][y] == 0
 
 def is_game_over(board):
-    for i in range(pp.width):
-        for j in range(pp.height):
+    for i in range(pp.width - 1):
+        for j in range(pp.height - 1):
             if board[i][j] == 0:
                 continue
             if j + 4 < pp.height and all(board[i][j + k] == board[i][j] for k in range(1, 5)):
@@ -24,8 +24,8 @@ def is_game_over(board):
     
 def get_legal_moves(board):
     legal_moves = []
-    for i in range(pp.width):
-        for j in range(pp.height):
+    for i in range(pp.width - 1):
+        for j in range(pp.height - 1):
             if board[i][j] == 0:
                 legal_moves.append((i, j))
     return legal_moves
@@ -37,8 +37,8 @@ def make_move(board, x, y):
         pp.pipeOut("Error: illegal move")
 
 def For_block_opp(board, player):
-    for i in range(pp.width):
-        for j in range(pp.height):
+    for i in range(pp.width - 1):
+        for j in range(pp.height - 1):
             if isFree(i, j, board) and (
                 j + 4 < pp.height and all(board[i][j + k] == player for k in range(1, 5)) or
                 j - 4 >= 0 and all(board[i][j - k] == player for k in range(1, 5)) or
@@ -54,8 +54,8 @@ def For_block_opp(board, player):
     return False, 0, 0
         
 def has_won(board, player):
-    for i in range(pp.width):
-        for j in range(pp.height):
+    for i in range(pp.width - 1):
+        for j in range(pp.height - 1):
             if (
                 j + 4 < pp.height and all(board[i][j + k] == player for k in range(1, 5)) or
                 i + 4 < pp.width and all(board[i + k][j] == player for k in range(1, 5)) or
@@ -105,8 +105,8 @@ def select_best_move(board, x, y):
     best_move = None
     best_score = float('-inf')
     
-    for i in range(pp.width):
-        for j in range(pp.height):
+    for i in range(pp.width - 1):
+        for j in range(pp.height - 1):
             node = board[i][j]
             if not isinstance(node, dict):
                 node = {'total_score': 0, 'visit_count': 0, 'parent': None}
@@ -137,8 +137,8 @@ def check_up_left(board, i, j, player):
     return False, 0, 0
 
 def checkVictory(board, player):
-    for i in range(pp.width):
-        for j in range(pp.height):
+    for i in range(pp.width - 1):
+        for j in range(pp.height - 1):
             victory, x, y = check_up_right(board, i, j, player)
             victory2, z, w = check_up_left(board, i, j, player)
             if victory:
@@ -200,9 +200,10 @@ def hasToBlock(board, i, j):
     return False, 0, 0
 
 def placePion(board):
-    for i in range(pp.width):
-        for j in range(pp.height):
+    for i in range(pp.width - 1):
+        for j in range(pp.height - 1):
             # Check the other cases than 1,1,1,0,1. Idem for the oppponent
+            # test with diagonal
             place, x, z = placePionV2(board, i, j)
             if place:
                 return x, z
@@ -271,8 +272,8 @@ def placePion(board):
 
 def generate_patterns(board):
     patterns = []
-    for i in range(pp.width):
-        for j in range(pp.height):
+    for i in range(pp.width - 1):
+        for j in range(pp.height - 1):
             pattern = [board[i][j + k] for k in range(5) if j + k < pp.height]
             patterns.append(pattern)
     return patterns

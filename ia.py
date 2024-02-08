@@ -17,7 +17,7 @@ from annexe_function import play_random_game, backpropagate, select_best_move, i
 pp.infotext = 'name="AI", author="Andrea Mancion", version="1.0", country="France", www="https://github.com/stranskyjan/pbrain-pyrandom"'
 
 MAX_BOARD = 50
-board = [[0 for i in range(MAX_BOARD)] for j in range(MAX_BOARD)]
+board = [[0 for i in range(MAX_BOARD - 1)] for j in range(MAX_BOARD - 1)]
 
 EASY = False
 MEDIUM = True
@@ -28,8 +28,8 @@ counter = 0
 
 def isFreeSize():
     count = 0
-    for i in range(pp.width):
-        for j in range(pp.height):
+    for i in range(pp.width - 1):
+        for j in range(pp.height - 1):
             if isFree(i, j, board):
                 count += 1
     return count
@@ -95,8 +95,8 @@ def medium_mode(i):
         pp.do_mymove(x, y)
         
 def checkAiPion():
-    for i in range(pp.width):
-        for j in range(pp.height):
+    for i in range(pp.width - 1):
+        for j in range(pp.height - 1):
             if board[i][j] == 1:
                 return True
     return False
@@ -181,10 +181,10 @@ def block_opponent_moves():
     global counter
     if ai_made_move:
         return
-    for i in range(pp.width):
-        for j in range(pp.height):
-            # (if it didn't work then have to do the i and j range again)
-            # TODO
+    for i in range(pp.width - 1):
+        for j in range(pp.height - 1):
+            # WARNING didn't work when the player is about to win (Communication file)
+            # Test with diagonal
             place, x, y = hasToBlock(board, i, j)
             if place:
                 ai_made_move = True
