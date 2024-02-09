@@ -194,6 +194,10 @@ def block_opponent_moves():
                 board[i][j] = 2
                 victory, z, w = For_block_opp(board, 2)
                 if victory:
+                    if (isFree(z, w, board)):
+                        board[i][j] = 0
+                        ai_made_move = True
+                        pp.do_mymove(z, w)
                     if counter == 0 or counter % 2 == 0:
                         counter += 1
                         print(f"JE VAIS LA JE BLOQUE {i} {j}")
@@ -225,25 +229,28 @@ def block_opponent_moves():
                         pp.do_mymove(z, w)
                         return
                 board[i][j] = 0
+                
+def brain_block_opponent(canBlock):
+    print(canBlock)
+    if canBlock:
+        victory, z, w = For_block_opp(board, 1)
+        if victory:
+            print(f"I {z} J {w}")
+            pp.do_mymove(z, w)
+            if is_game_over(board):
+                pp.pipeOut("INFO game over")
+                winner = evaluate(board)
+                if winner == -1:
+                    pp.pipeOut("Winner is opponent")
+                elif winner == 1:
+                    pp.pipeOut("Winner is AI")
+                sys.exit(0)
+    if canBlock:
+        block_opponent_moves()
     
-def brain_opponents(x, y, canBlock):
+def brain_opponents(x, y):
     if isFree(x, y, board):
         board[x][y] = 2
-        if canBlock:
-            victory, z, w = For_block_opp(board, 1)
-            if victory:
-                print(f"I {z} J {w}")
-                pp.do_mymove(z, w)
-                if is_game_over(board):
-                    pp.pipeOut("INFO game over")
-                    winner = evaluate(board)
-                    if winner == -1:
-                        pp.pipeOut("Winner is opponent")
-                    elif winner == 1:
-                        pp.pipeOut("Winner is AI")
-                    sys.exit(0)
-        if canBlock:
-            block_opponent_moves()
     else:
         pp.pipeOut("ERROR opponents's move [{},{}]".format(x, y))
         
@@ -259,6 +266,7 @@ pp.brain_my = brain_my
 pp.brain_end = brain_end
 pp.brain_about = brain_about
 pp.brain_opponents = brain_opponents
+pp.brain_block_opponent = brain_block_opponent
 pp.brain_block = brain_block
 
 def main():

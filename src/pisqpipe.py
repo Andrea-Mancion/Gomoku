@@ -49,9 +49,12 @@ def brain_turn():
 def brain_my(x, y):
 	"""put your move to the board"""
 	raise NotImplementedError
-def brain_opponents(x, y, canBlock):
+def brain_opponents(x, y):
 	"""put opponent's move to the board"""
 	raise NotImplementedError
+def brain_block_opponent(canBlock):
+    """can block the opponent's move"""
+    raise NotImplementedError
 def brain_block(x, y):
 	"""square [x,y] belongs to a winning line (when info_continuous is 1)"""
 	raise NotImplementedError
@@ -246,7 +249,8 @@ def do_command(cmd):
 		if x is None or y is None:
 			pipeOut("ERROR bad coordinates")
 		else:
-			brain_opponents(x, y, True)
+			brain_opponents(x, y)
+			brain_block_opponent(True)
 			turn()
 			brain_turn()
 		return
@@ -292,13 +296,14 @@ def do_command(cmd):
 			if who == 1:
 				brain_my(x, y)
 			elif who == 2:
-				brain_opponents(x, y, False)
+				brain_opponents(x, y)
 			elif who == 3:
 				brain_block(x, y)
 			else:
 				if cmd.lower() != "done":
 					pipeOut("ERROR x,y,who or DONE expected after BOARD")
 				break
+		brain_block_opponent(True)
 		turn()
 		brain_turn()
 		return
