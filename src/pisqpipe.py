@@ -49,7 +49,7 @@ def brain_turn():
 def brain_my(x, y):
 	"""put your move to the board"""
 	raise NotImplementedError
-def brain_opponents(x, y):
+def brain_opponents(x, y, canBlock):
 	"""put opponent's move to the board"""
 	raise NotImplementedError
 def brain_block(x, y):
@@ -246,7 +246,7 @@ def do_command(cmd):
 		if x is None or y is None:
 			pipeOut("ERROR bad coordinates")
 		else:
-			brain_opponents(x, y)
+			brain_opponents(x, y, True)
 			turn()
 			brain_turn()
 		return
@@ -292,7 +292,7 @@ def do_command(cmd):
 			if who == 1:
 				brain_my(x, y)
 			elif who == 2:
-				brain_opponents(x, y)
+				brain_opponents(x, y, False)
 			elif who == 3:
 				brain_block(x, y)
 			else:
