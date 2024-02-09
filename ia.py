@@ -98,6 +98,7 @@ def checkAiPion():
     for i in range(pp.width - 1):
         for j in range(pp.height - 1):
             if board[i][j] == 1:
+
                 return True
     return False
 
@@ -247,6 +248,7 @@ def brain_block_opponent(canBlock):
                 sys.exit(0)
     if canBlock:
         block_opponent_moves()
+
     
 def brain_opponents(x, y):
     if isFree(x, y, board):
