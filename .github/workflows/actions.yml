@@ -325,3 +325,16 @@ jobs:
         1,1,2
         2,1,2
         DONE" | python ia.py
+        
+    - name: Vertical Win and defense 2
+      run: |
+        echo "BOARD
+        10,10,1
+        11,10,1
+        12,10,1
+        13,10,1
+        10,11,2
+        11,11,2
+        12,11,2
+        13,11,2
+        DONE" | python ia.py
