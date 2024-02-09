@@ -222,19 +222,28 @@ def block_opponent_moves():
 def brain_opponents(x, y):
     if isFree(x, y, board):
         board[x][y] = 2
-        victory, z, w = For_block_opp(board, 1)
-        if victory:
-            print(f"I {z} J {w}")
-            pp.do_mymove(z, w)
-            if is_game_over(board):
-                pp.pipeOut("INFO game over")
-                winner = evaluate(board)
-                if winner == -1:
-                    pp.pipeOut("Winner is opponent")
-                elif winner == 1:
-                    pp.pipeOut("Winner is AI")
-                sys.exit(0)
-        block_opponent_moves()
+        victory1, z1, w1 = For_block_opp(board, 1)
+        victory2, z2, w2 = For_block_opp(board, 2)
+        
+        if victory1 and not victory2:
+            print(f"I {z1} J {w1}")
+            pp.do_mymove(z1, w1)
+        if not victory1 and victory2:
+            print(f"I {z2} J {w2}")
+            pp.do_mymove(z2, w2)
+        if victory1 and victory2:
+            print(f"I {z1} J {w1}")
+            pp.do_mymove(z1, w1)
+        if not victory1 and not victory2:
+            print("here")
+        if is_game_over(board):
+            pp.pipeOut("INFO game over")
+            winner = evaluate(board)
+            if winner == -1:
+                pp.pipeOut("Winner is opponent")
+            elif winner == 1:
+                pp.pipeOut("Winner is AI")
+            sys.exit(0)
     else:
         pp.pipeOut("ERROR opponents's move [{},{}]".format(x, y))
         
