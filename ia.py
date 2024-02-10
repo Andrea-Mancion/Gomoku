@@ -199,6 +199,7 @@ def block_opponent_moves():
                         board[i][j] = 0
                         ai_made_move = True
                         pp.do_mymove(z, w)
+                        return
                     if counter == 0 or counter % 2 == 0:
                         counter += 1
                         print(f"JE VAIS LA JE BLOQUE {i} {j}")
