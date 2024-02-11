@@ -177,21 +177,31 @@ def brain_end():
 def brain_about():
     pp.pipeOut(pp.infotext)
     
+def has_oppoenent_block(board):
+    global ai_made_move
+    if ai_made_move:
+        return
+    for i in range(pp.width - 1):
+        for j in range(pp.height - 1):
+            place, x, y = hasToBlock(board, i, j)
+            if place:
+                ai_made_move = True
+                pp.do_mymove(x, y)
+                return True
+    return False
+    
 def block_opponent_moves():
     global ai_made_move
     global counter
     if ai_made_move:
         return
+    if has_oppoenent_block(board):
+        return
     for i in range(pp.width - 1):
         for j in range(pp.height - 1):
             # WARNING didn't work when the player is about to win (Communication file)
             # Test with diagonal
-            place, x, y = hasToBlock(board, i, j)
-            if place:
-                ai_made_move = True
-                pp.do_mymove(x, y)
-                return
-            elif isFree(i, j, board):
+            if isFree(i, j, board):
                 board[i][j] = 2
                 victory, z, w = For_block_opp(board, 2)
                 if victory:
