@@ -181,8 +181,8 @@ def has_oppoenent_block(board):
     global ai_made_move
     if ai_made_move:
         return
-    for i in range(pp.width - 1):
-        for j in range(pp.height - 1):
+    for i in range(pp.width):
+        for j in range(pp.height):
             place, x, y = hasToBlock(board, i, j)
             if place:
                 ai_made_move = True
@@ -199,8 +199,6 @@ def block_opponent_moves():
         return
     for i in range(pp.width - 1):
         for j in range(pp.height - 1):
-            # WARNING didn't work when the player is about to win (Communication file)
-            # Test with diagonal
             if isFree(i, j, board):
                 board[i][j] = 2
                 victory, z, w = For_block_opp(board, 2)
