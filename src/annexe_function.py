@@ -184,7 +184,7 @@ def hasToBlock(board, i, j):
     elif board[i][j] == 2 and board[i + 1][j + 1] == 2 and board[i + 2][j + 2] == 2 and board[i + 3][j + 3] == 0 and board[i + 4][j + 4] == 2:
         print("Found pattern Diagonally 1")
         return True, i + 3, j + 3
-    elif board[i][j] == 2 and board[i - 1][j + 1] == 2 and board[i - 2][j + 2] == 2 and board[i - 3][j + 3] == 0 and board[i - 4][j + 4] == 2:
+    elif board[i][j] == 2 and board[i - 1][j + 1] == 2 and board[i - 2][j + 2] == 2 and board[i - 3][j + 3] ==   0 and board[i - 4][j + 4] == 2:
         print("Found pattern Diagonally 2")
         return True, i - 3, j + 3
     elif board[i][j] == 2 and board[i + 1][j - 1] == 2 and board[i + 2][j - 2] == 2 and board[i + 3][j - 3] == 0 and board[i + 4][j - 4] == 2:
@@ -193,6 +193,7 @@ def hasToBlock(board, i, j):
     elif board[i][j] == 2 and board[i - 1][j - 1] == 2 and board[i - 2][j - 2] == 2 and board[i - 3][j - 3] == 0 and board[i - 4][j - 4] == 2:
         print("Found pattern Diagonally 4")
         return True, i - 3, j - 3
+    # other cases
     elif board[i][j] == 2 and board[i][j + 1] == 2 and board[i][j + 2] == 2 and board[i][j + 3] == 2 and board[i][j + 4] == 0:
         print("Found pattern horizontally")
         return True, i, j + 4
@@ -208,9 +209,47 @@ def hasToBlock(board, i, j):
     elif board[i][j] == 2 and board[i + 1][j - 1] == 2 and board[i + 2][j - 2] == 2 and board[i + 3][j - 3] == 2 and board[i + 4][j - 4] == 0:
         print("Found pattern Diagonally 3")
         return True, i + 4, j - 4
-    elif board[i][j] == 2 and board[i - 1][j - 1] == 2 and board[i - 2][j - 2] == 2 and board[i - 3][j - 3] == 0 and board[i - 4][j - 4] == 0:
+    elif board[i][j] == 2 and board[i - 1][j - 1] == 2 and board[i - 2][j - 2] == 2 and board[i - 3][j - 3] == 2 and board[i - 4][j - 4] == 0:
         print("Found pattern Diagonally 4")
         return True, i - 4, j - 4
+    #Other case
+    elif board[i][j] == 2 and board[i][j + 1] == 2 and board[i][j + 2] == 0 and board[i][j + 3] == 2 and board[i][j + 4] == 2:
+        print("Found pattern horizontally")
+        return True, i, j + 2
+    elif board[i][j] == 2 and board[i + 1][j] == 2 and board[i + 2][j] == 0 and board[i + 3][j] == 2 and board[i + 4][j] == 2:
+        print("Found pattern Vertically")
+        return True, i + 2, j
+    elif board[i][j] == 2 and board[i + 1][j + 1] == 2 and board[i + 2][j + 2] == 0 and board[i + 3][j + 3] == 2 and board[i + 4][j + 4] == 2:
+        print("Found pattern Diagonally 1")
+        return True, i + 2, j + 2
+    elif board[i][j] == 2 and board[i - 1][j + 1] == 2 and board[i - 2][j + 2] == 0 and board[i - 3][j + 3] == 2 and board[i - 4][j + 4] == 2:
+        print("Found pattern Diagonally 2")
+        return True, i - 2, j + 2
+    elif board[i][j] == 2 and board[i + 1][j - 1] == 2 and board[i + 2][j - 2] == 0 and board[i + 3][j - 3] == 2 and board[i + 4][j - 4] == 2:
+        print("Found pattern Diagonally 3")
+        return True, i + 2, j - 2
+    elif board[i][j] == 2 and board[i - 1][j - 1] == 2 and board[i - 2][j - 2] == 0 and board[i - 3][j - 3] == 2 and board[i - 4][j - 4] == 2:
+        print("Found pattern Diagonally 4")
+        return True, i - 2, j - 2
+    # other case
+    elif board[i][j] == 2 and board[i][j + 1] == 0 and board[i][j + 2] == 2 and board[i][j + 3] == 2 and board[i][j + 4] == 2:
+        print("Found pattern horizontally")
+        return True, i, j + 1
+    elif board[i][j] == 2 and board[i + 1][j] == 0 and board[i + 2][j] == 2 and board[i + 3][j] == 2 and board[i + 4][j] == 2:
+        print("Found pattern Vertically")
+        return True, i + 1, j
+    elif board[i][j] == 2 and board[i + 1][j + 1] == 0 and board[i + 2][j + 2] == 2 and board[i + 3][j + 3] == 2 and board[i + 4][j + 4] == 2:
+        print("Found pattern Diagonally 1")
+        return True, i + 1, j + 1
+    elif board[i][j] == 2 and board[i - 1][j + 1] == 0 and board[i - 2][j + 2] == 2 and board[i - 3][j + 3] == 2 and board[i - 4][j + 4] == 2:
+        print("Found pattern Diagonally 2")
+        return True, i - 1, j + 1
+    elif board[i][j] == 2 and board[i + 1][j - 1] == 0 and board[i + 2][j - 2] == 2 and board[i + 3][j - 3] == 2 and board[i + 4][j - 4] == 2:
+        print("Found pattern Diagonally 3")
+        return True, i + 1, j - 1
+    elif board[i][j] == 2 and board[i - 1][j - 1] == 0 and board[i - 2][j - 2] == 2 and board[i - 3][j - 3] == 2 and board[i - 4][j - 4] == 2:
+        print("Found pattern Diagonally 4")
+        return True, i - 1, j - 1
     else:
         victory, x, y = checkVictory(board, 2)
         if victory:
