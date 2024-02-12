@@ -289,9 +289,7 @@ jobs:
       run: |
         echo "BOARD
         5,10,1
-        
         7,10,1
-        
         9,10,1
         10,10,1
         DONE" | python ia.py
@@ -393,5 +391,4 @@ jobs:
         10,10,2
         11,10,2
         13,10,2
-
         DONE" | python ia.py
