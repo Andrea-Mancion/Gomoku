@@ -12,7 +12,7 @@ import platform
 import pisqpipe as pp
 from pisqpipe import DEBUG_EVAL, DEBUG
 import copy
-from annexe_function import play_random_game, backpropagate, select_best_move, is_game_over, evaluate, For_block_opp, isFree, placePion, generate_patterns, find_best_move_for_pattern, hasToBlock
+from annexe_function import play_random_game, backpropagate, select_best_move, is_game_over, evaluate, For_block_opp, isFree, placePion, generate_patterns, find_best_move_for_pattern, hasToBlock, placePionV2
 
 pp.infotext = 'name="AI", author="Andrea Mancion", version="1.0", country="France", www="https://github.com/stranskyjan/pbrain-pyrandom"'
 
@@ -189,11 +189,26 @@ def has_oppoenent_block(board):
                 pp.do_mymove(x, y)
                 return True
     return False
+
+def has_to_place_pion(board):
+    global ai_made_move
+    if ai_made_move:
+        return
+    for i in range(pp.width):
+        for j in range(pp.height):
+            place, x, y = placePionV2(board, i, j)
+            if place:
+                ai_made_move = True
+                pp.do_mymove(x, y)
+                return True
+    return False
     
 def block_opponent_moves():
     global ai_made_move
     global counter
     if ai_made_move:
+        return
+    if has_to_place_pion(board):
         return
     if has_oppoenent_block(board):
         return
